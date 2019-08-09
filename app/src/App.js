@@ -47,7 +47,6 @@ class App extends React.Component {
 			.then(res => res.json())
 			.then(data => {
 				if (typeof data.results !== 'undefined') {
-					console.log(data.results)
 					this.setState({
 						games : data.results
 					})
@@ -65,7 +64,6 @@ class App extends React.Component {
 			.then(res => res.json())
 			.then(data => {
 				if (typeof data.results !== 'undefined') {
-					console.log(data.results)
 					if (data.results[0] != null) {
 						this.onGetResult(data.results[0].slug)
 					}
