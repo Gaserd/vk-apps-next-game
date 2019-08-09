@@ -1,6 +1,6 @@
 import React from 'react';
 import connect from '@vkontakte/vkui-connect';
-import { View, Search, Gallery } from '@vkontakte/vkui';
+import { View, Search, Gallery, Button, Group, InfoRow, Panel, FixedLayout, Header, Link, PanelHeader, Div, Cell, List } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 
 class App extends React.Component {
@@ -87,55 +87,69 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<View activePanel="home">
-				<div id="home">
+			<View activePanel="main">
+				<Panel id="main" theme="white">
+				<PanelHeader>
+				<b>Найди похожую игру</b> <span role="img">🎮</span>
+          </PanelHeader>
 					<div>
-						<h1
-							style={{
-								paddingLeft : 16,
-								fontSize : 36,
-								padingTop : 20
-							}}
-						>Найди похожую игру <span role="img">🎮</span></h1>
-						<Search 
+					<FixedLayout vertical="top" style={{ background: 'white' }}>
+					<Search
 							value={this.state.search}
 							onChange={this.onChange}
-						/>
+							/>
+						</FixedLayout>
+						<Div style={{
+							paddingTop: 40
+						}}>
 						{
+							
 							this.state.games.length > 0 &&
 							this.state.games.map((game, index) => (
 								<div key={index} style={{
 									padding : 16
 								}}>
 									<h2>{game.name}</h2>
-									<h3>Дата выхода игры: {this.getYear(game.released)}</h3>
-									<h4>Metacritic: {this.isMetacriticAvailable(game.metacritic)}</h4>
-									<h3>В жанре: {this.state.games.length > 0 &&
+									<Group title="Информация об игре">
+										<List>
+									<Cell>
+										<InfoRow title="Жанр">
+										{this.state.games.length > 0 &&
 										 game.genres.map((gen, index) => (
 											<span key={index}>{gen.name} </span>
 										))}
-									</h3>
-									<p>{game.short_description}</p>
-									<h3>
-									{
-										game.stores.map((store, index) => (
-											<span key={index}>{store.url}</span>
-										))
-										}
-									</h3>
-									<div style={{
-										paddingBottom: 16
-									}}>
-										<h3>💵Можно купить в магазинах</h3>
+										</InfoRow>
+									</Cell>
+									<Cell>
+										<InfoRow title="Дата выхода">
+										{this.getYear(game.released)}
+										</InfoRow>
+									</Cell>
+									<Cell>
+										<InfoRow title="Metacritic">
+										{this.isMetacriticAvailable(game.metacritic)}
+										</InfoRow>
+									</Cell>
+									<Div>
+										<InfoRow title="Краткое описание">
 										
-										{
-											game.stores.map((store, index) => (
-													<span><a href={store.url_en}>{store.store.name}</a> </span>
+												</InfoRow>
+												{game.short_description}
+										</Div>
+									<Div>
+										<InfoRow title="Где купить">
+												</InfoRow>
+												{
+														game.stores.map((store, index) => (
+															<span><Button style={{
+																margin: 5
+															}} level="commerce" href={store.url_en}>{store.store.name}</Button></span>
 												))
-												
                                             }
-                                    </div>
-									<Gallery
+											</Div>
+									<Cell>
+										<InfoRow title="Галерея">
+										<Gallery
 										slideWidth="90%"
 										style={{ height: 400 }}
 									>
@@ -152,10 +166,27 @@ class App extends React.Component {
 											))
 										}
 									</Gallery>
+										</InfoRow>
+									</Cell>
+									</List>
+								</Group>
+									
+									<div style={{
+										paddingBottom: 16
+									}}>
+
+                                    </div>
+									
 								</div>
 							))
-						}
+							}
+							</Div>
 					</div>
+    </Panel>
+
+
+				<div id="home">
+				
 				</div>
 			</View>
 		);
