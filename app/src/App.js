@@ -33,6 +33,10 @@ class App extends React.Component {
 		});
 	}
 
+	getYear(gameDate) {
+		return new Date(gameDate).getFullYear();
+	}
+
 	render() {
 		return (
 			<View activePanel="home">
@@ -56,14 +60,32 @@ class App extends React.Component {
 									padding : 16
 								}}>
 									<h2>{game.name}</h2>
+									<h3>Дата выхода игры: {this.getYear(game.released)}</h3>
+									<h4>Metacritic: {game.metacritic}</h4>
 									<h3>
+										
 										{ game.genres.map((gen, index) => (
-											<span key={index}>{gen.name}</span>
+											<span key={index}>{gen.name}, </span>
 										))}
 									</h3>
 									<p>{game.short_description}</p>
+									<h3>
+									{
+										game.stores.map((store, index) => (
+											<span key={index}>{store.url}</span>
+										))
+										}
+									</h3>
+									<div>
+                                            {
+                                                game.stores.map((store, index) => (
+                                                    <a href={store.url_en}>{store.url_en}</a>
+												))
+												
+                                            }
+                                    </div>
 									<Gallery
-										slideWidth="90%"
+										slideWidth="100%"
 										style={{ height: 270 }}
 									>
 										{
