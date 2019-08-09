@@ -143,7 +143,7 @@ class App extends React.Component {
 														game.stores.map((store, index) => (
 															<span><Button style={{
 																margin: 5
-															}} level="commerce" href={store.url_en}>{store.store.name}</Button></span>
+															}} level="commerce" component="a" href={store.url_en}>{store.store.name}</Button></span>
 												))
                                             }
 											</Div>
