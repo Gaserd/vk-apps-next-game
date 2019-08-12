@@ -112,38 +112,17 @@ class App extends React.Component {
 							
 							this.state.games.length > 0 &&
 							this.state.games.map((game, index) => (
-								<div key={index} style={{
-									padding: 16,
-									backgroundImage: 'url(' + game.background_image + ')',
-            								backgroundSize: 'cover',
-									overflow: 'hidden',
-									height: '100vh',
-									backgroundPosition: 'center',
-									backgroundColor: 'transparent',
-									color: '#fff',
-								}}>
+								<div key={index}>
 									<h2>{game.name}</h2>
 									<Group 
 										title="Информация об игре"
 										style={{
 											marginBottom: 16,
-											backgroundColor: 'rgba(0, 0, 0, 0.5)',
-											color: 'white'
 										}}
 									>
-										<List
-										style={{
-											color: 'white',
-											backgroundColor: 'rgba(0, 0, 0, 0.5)',
-										}}
-										>
+										<List>
 											<Cell>
-												<InfoRow title="Жанр"
-												style={{
-													color: 'white',
-													
-												}}
-												>
+												<InfoRow title="Жанр">
 												{	this.state.games.length > 0 &&
 													game.genres.map((gen, index) => (
 														<span key={index}>{gen.name} </span>
@@ -152,22 +131,12 @@ class App extends React.Component {
 												</InfoRow>
 											</Cell>
 											<Cell>
-												<InfoRow title="Дата выхода"
-												style={{
-													color: 'white',
-													
-												}}
-												>
+												<InfoRow title="Дата выхода">
 													{this.getYear(game.released)}
 												</InfoRow>
 											</Cell>
 											<Cell>
-												<InfoRow title="Metacritic"
-												style={{
-													color: 'white',
-													
-												}}
-												>
+												<InfoRow title="Metacritic">
 													{this.isMetacriticAvailable(game.metacritic)}
 												</InfoRow>
 											</Cell>
@@ -176,34 +145,38 @@ class App extends React.Component {
 													{game.short_description}
 												</InfoRow>
 											</Div>
-											<Div>
-												<InfoRow title="Где купить">
-												<div style={{
-													display : 'flex',
-													flexWrap : 'wrap'
-												}}>
-													{
-														game.stores.map((store, index) => (
-															<a style={{
-																	marginRight: 5,
-																	marginBottom : 5,
-																	borderRadius : 5,
-																	padding : 5,
-																	textDecoration : 'none',
-																	color : '#fff',
-																	backgroundColor : '#da2727'
-																}} 
-																target="_blank"
-																rel="noopener noreferrer"
-																key={index}
-																href={store.url_en}>
-																{store.store.name}
-															</a>
-														))
-													}
-												</div>
-												</InfoRow>
-											</Div>
+											{
+												game.stores.length > 0 &&
+
+												<Div>
+													<InfoRow title="Где купить">
+													<div style={{
+														display : 'flex',
+														flexWrap : 'wrap'
+													}}>
+														{
+															game.stores.map((store, index) => (
+																<a style={{
+																		marginRight: 5,
+																		marginBottom : 5,
+																		borderRadius : 5,
+																		padding : 5,
+																		textDecoration : 'none',
+																		color : '#fff',
+																		backgroundColor : '#da2727'
+																	}} 
+																	target="_blank"
+																	rel="noopener noreferrer"
+																	key={index}
+																	href={store.url_en}>
+																	{store.store.name}
+																</a>
+															))
+														}
+													</div>
+													</InfoRow>
+												</Div>
+											}
 											<Cell>
 												<InfoRow title="Галерея" />
 												<Gallery
