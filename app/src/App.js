@@ -113,18 +113,37 @@ class App extends React.Component {
 							this.state.games.length > 0 &&
 							this.state.games.map((game, index) => (
 								<div key={index} style={{
-									padding : 16
+									padding: 16,
+									backgroundImage: 'url(' + game.background_image + ')',
+            								backgroundSize: 'cover',
+									overflow: 'hidden',
+									height: '100vh',
+									backgroundPosition: 'center',
+									backgroundColor: 'transparent',
+									color: '#fff',
 								}}>
 									<h2>{game.name}</h2>
 									<Group 
 										title="Информация об игре"
 										style={{
-											marginBottom : 16
+											marginBottom: 16,
+											backgroundColor: 'rgba(0, 0, 0, 0.5)',
+											color: 'white'
 										}}
 									>
-										<List>
+										<List
+										style={{
+											color: 'white',
+											backgroundColor: 'rgba(0, 0, 0, 0.5)',
+										}}
+										>
 											<Cell>
-												<InfoRow title="Жанр">
+												<InfoRow title="Жанр"
+												style={{
+													color: 'white',
+													
+												}}
+												>
 												{	this.state.games.length > 0 &&
 													game.genres.map((gen, index) => (
 														<span key={index}>{gen.name} </span>
@@ -133,12 +152,22 @@ class App extends React.Component {
 												</InfoRow>
 											</Cell>
 											<Cell>
-												<InfoRow title="Дата выхода">
+												<InfoRow title="Дата выхода"
+												style={{
+													color: 'white',
+													
+												}}
+												>
 													{this.getYear(game.released)}
 												</InfoRow>
 											</Cell>
 											<Cell>
-												<InfoRow title="Metacritic">
+												<InfoRow title="Metacritic"
+												style={{
+													color: 'white',
+													
+												}}
+												>
 													{this.isMetacriticAvailable(game.metacritic)}
 												</InfoRow>
 											</Cell>
