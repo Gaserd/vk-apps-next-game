@@ -1,6 +1,6 @@
 import React from 'react';
 import connect from '@vkontakte/vkui-connect';
-import { View, Search, Gallery, Button, Group, InfoRow, Panel, FixedLayout, Header, Link, PanelHeader, Div, Cell, List } from '@vkontakte/vkui';
+import { View, Search, Gallery, Button, Group, InfoRow, Panel, FixedLayout, PanelHeader, Div, Cell, List } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 
 class App extends React.Component {
@@ -84,14 +84,20 @@ class App extends React.Component {
 		}
 	}
 
+	openShowImages(images) {
+		connect.send("VKWebAppShowImages", { 
+			images:  images
+		  });
+	}
+
 
 	render() {
 		return (
 			<View activePanel="main">
 				<Panel id="main" theme="white">
 				<PanelHeader>
-				<b>Найди похожую игру</b> <span role="img">🎮</span>
-          </PanelHeader>
+						<b>Найди похожую игру</b> <span role="img">🎮</span>
+				</PanelHeader>
 					<div>
 					<FixedLayout vertical="top" style={{ background: 'white' }}>
 					<Search
@@ -110,84 +116,85 @@ class App extends React.Component {
 									padding : 16
 								}}>
 									<h2>{game.name}</h2>
-									<Group title="Информация об игре">
-										<List>
-									<Cell>
-										<InfoRow title="Жанр">
-										{this.state.games.length > 0 &&
-										 game.genres.map((gen, index) => (
-											<span key={index}>{gen.name} </span>
-										))}
-										</InfoRow>
-									</Cell>
-									<Cell>
-										<InfoRow title="Дата выхода">
-										{this.getYear(game.released)}
-										</InfoRow>
-									</Cell>
-									<Cell>
-										<InfoRow title="Metacritic">
-										{this.isMetacriticAvailable(game.metacritic)}
-										</InfoRow>
-									</Cell>
-									<Div>
-										<InfoRow title="Краткое описание">
-										
-												</InfoRow>
-												{game.short_description}
-										</Div>
-									<Div>
-										<InfoRow title="Где купить">
-												</InfoRow>
-												{
-														game.stores.map((store, index) => (
-															<span><Button style={{
-																margin: 5
-															}} level="commerce" component="a" href={store.url_en}>{store.store.name}</Button></span>
-												))
-                                            }
-											</Div>
-									<Cell>
-										<InfoRow title="Галерея">
-										<Gallery
-										slideWidth="90%"
-										style={{ height: 400 }}
+									<Group 
+										title="Информация об игре"
+										style={{
+											marginBottom : 16
+										}}
 									>
-										{
-											game.short_screenshots.map((screen, index) => (
-												<img
-													alt=""
-													src={screen.image}
-													key={index}
-													style={{
-														marginRight : 5
-													}}
-												></img>
-											))
-										}
-									</Gallery>
-										</InfoRow>
-									</Cell>
-									</List>
-								</Group>
-									
-									<div style={{
-										paddingBottom: 16
-									}}>
-
-                                    </div>
-									
+										<List>
+											<Cell>
+												<InfoRow title="Жанр">
+												{	this.state.games.length > 0 &&
+													game.genres.map((gen, index) => (
+														<span key={index}>{gen.name} </span>
+													))
+												}
+												</InfoRow>
+											</Cell>
+											<Cell>
+												<InfoRow title="Дата выхода">
+													{this.getYear(game.released)}
+												</InfoRow>
+											</Cell>
+											<Cell>
+												<InfoRow title="Metacritic">
+													{this.isMetacriticAvailable(game.metacritic)}
+												</InfoRow>
+											</Cell>
+											<Div>
+												<InfoRow title="Краткое описание" />
+													{game.short_description}
+											</Div>
+											<Div>
+												<InfoRow title="Где купить" />
+												{
+													game.stores.map((store, index) => (
+														<Button style={{
+															margin: 5
+															}} 
+															level="commerce"
+															key={index}
+															component="a" 
+															href={store.url_en}>
+															{store.store.name}
+														</Button>
+													))
+												}
+											</Div>
+											<Cell>
+												<InfoRow title="Галерея" />
+												<Gallery
+													slideWidth="90%"
+													style={{ height: 'inherit' }}
+												>
+												{
+													game.short_screenshots.map((screen, index) => (
+														<img
+															alt=""
+															src={screen.image}
+															key={index}
+															style={{
+																minWidth : 320
+															}}
+															onClick={(e) => {
+																	let images = game.short_screenshots.map((scr) => scr.image)
+																	this.openShowImages(images)
+																}
+															}
+														></img>
+													))
+												}
+												</Gallery>
+											</Cell>
+										</List>
+									</Group>
 								</div>
 							))
 							}
 							</Div>
 					</div>
-    </Panel>
-
-
-				<div id="home">
-				
-				</div>
+    			</Panel>
 			</View>
 		);
 	}
