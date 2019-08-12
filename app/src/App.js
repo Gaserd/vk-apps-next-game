@@ -150,15 +150,21 @@ class App extends React.Component {
 												<InfoRow title="Где купить" />
 												{
 													game.stores.map((store, index) => (
-														<Button style={{
-															margin: 5
+														<a style={{
+																marginRight: 5,
+																borderRadius : 5,
+																padding : 5,
+																textDecoration : 'none',
+																color : '#fff',
+																backgroundColor : '#da2727',
+																whiteSpace : 'nowrap'
 															}} 
-															level="commerce"
+															target="_blank"
+															rel="noopener noreferrer"
 															key={index}
-															component="a" 
 															href={store.url_en}>
 															{store.store.name}
-														</Button>
+														</a>
 													))
 												}
 											</Div>
