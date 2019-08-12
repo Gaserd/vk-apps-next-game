@@ -15,6 +15,10 @@ class App extends React.Component {
 		this.onChange = this.onChange.bind(this)
 	}
 
+	componentDidMount(){
+		this.onChange('')
+	}
+
 	Translitirate(word) {
 		if (word != undefined) {
 			var A = {};
@@ -168,7 +172,10 @@ class App extends React.Component {
 																	target="_blank"
 																	rel="noopener noreferrer"
 																	key={index}
-																	href={store.url_en}>
+																	href={
+																		store.store.domain !== 'epicgames.com' ? 
+																		store.url_en : store.url_en + '&epic_affiliate=thebatya_games'
+																	}>
 																	{store.store.name}
 																</a>
 															))
