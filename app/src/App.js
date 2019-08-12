@@ -172,24 +172,37 @@ class App extends React.Component {
 												</InfoRow>
 											</Cell>
 											<Div>
-												<InfoRow title="Краткое описание" />
+												<InfoRow title="Краткое описание">
 													{game.short_description}
+												</InfoRow>
 											</Div>
 											<Div>
-												<InfoRow title="Где купить" />
-												{
-													game.stores.map((store, index) => (
-														<Button style={{
-															margin: 5
-															}} 
-															level="commerce"
-															key={index}
-															component="a" 
-															href={store.url_en}>
-															{store.store.name}
-														</Button>
-													))
-												}
+												<InfoRow title="Где купить">
+												<div style={{
+													display : 'flex',
+													flexWrap : 'wrap'
+												}}>
+													{
+														game.stores.map((store, index) => (
+															<a style={{
+																	marginRight: 5,
+																	marginBottom : 5,
+																	borderRadius : 5,
+																	padding : 5,
+																	textDecoration : 'none',
+																	color : '#fff',
+																	backgroundColor : '#da2727'
+																}} 
+																target="_blank"
+																rel="noopener noreferrer"
+																key={index}
+																href={store.url_en}>
+																{store.store.name}
+															</a>
+														))
+													}
+												</div>
+												</InfoRow>
 											</Div>
 											<Cell>
 												<InfoRow title="Галерея" />
