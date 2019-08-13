@@ -3,6 +3,9 @@ import connect from '@vkontakte/vkui-connect';
 import { View, Search, Gallery, Button, Group, InfoRow, Panel, FixedLayout, PanelHeader, Div, Cell, List } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 
+
+var translate = require('yandex-translate')(apiKey);
+
 class App extends React.Component {
 	constructor(props) {
 		super(props);
@@ -132,9 +135,22 @@ class App extends React.Component {
 		  });
 	}
 
+
+
 	isDescriptionAvailable(index) {
 		if (this.state.games_additional.length > 4)
+			
 			return this.state.games_additional[index];
+	}
+
+	translateSentences(sentence) {
+		console.log("Translate sentence:" + sentence)
+		translate.translate(sentence, { to: 'ru' }, function(err, res) {
+			console.log(res.text)
+		//	this.forceUpdate();
+			return res.text;
+		  });
+		
 	}
 
 
@@ -189,6 +205,21 @@ class App extends React.Component {
 											</Cell>
 											<Div>
 												<InfoRow title="Описание">
+												<a style={{
+																		marginRight: 5,
+																		marginBottom : 5,
+																		borderRadius : 5,
+																		padding : 5,
+																		textDecoration : 'none',
+																		color : '#fff',
+																		backgroundColor : 'rgb(119, 185, 247)'
+																	}} 
+																
+																	key={index}
+																	href="#" onClick={() => {this.translateSentences(this.state.games_additional[index])}}
+																	>Перевести на русский
+																</a>
+													
 												<div dangerouslySetInnerHTML={{ __html: this.isDescriptionAvailable(index) }} />
 													
 												</InfoRow>
