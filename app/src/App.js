@@ -9,7 +9,8 @@ class App extends React.Component {
 
 		this.state = {
 			search : '',
-			games : []
+			games: [],
+			games_additional: []
 		};
 
 		this.onChange = this.onChange.bind(this)
@@ -54,6 +55,7 @@ class App extends React.Component {
 					this.setState({
 						games : data.results
 					})
+					this.additionalData();
 				}
 			})
 		});
@@ -76,6 +78,42 @@ class App extends React.Component {
 		});
 	}
 
+	additionalData() {
+		var additional_data = [];
+		this.state.games.length > 0 &&
+			this.state.games.map((game, index) => (
+				this.setState({ 
+					games_additional : []
+				}, function() {
+					fetch(`https://api.rawg.io/api/games/${game.slug}`)
+					.then(res => res.json())
+					.then(data => {
+						if (typeof data !== 'undefined') {
+							if (data != null) {
+								
+								additional_data[index] = data.description;
+
+								this.setState({
+									games_additional : additional_data
+								})
+								console.log(this.state.games_additional)
+							}
+						} else {
+							console.log(game.slug)
+						}
+					})
+						
+					})
+					
+			));
+		
+			this.setState({
+				games_additional : additional_data
+			})
+		
+			console.log(additional_data)
+	}
+
 	getYear(gameDate) {
 		return new Date(gameDate).getFullYear();
 	}
@@ -92,6 +130,11 @@ class App extends React.Component {
 		connect.send("VKWebAppShowImages", { 
 			images:  images
 		  });
+	}
+
+	isDescriptionAvailable(index) {
+		if (this.state.games_additional.length > 4)
+			return this.state.games_additional[index];
 	}
 
 
@@ -145,8 +188,9 @@ class App extends React.Component {
 												</InfoRow>
 											</Cell>
 											<Div>
-												<InfoRow title="Краткое описание">
-													{game.short_description}
+												<InfoRow title="Описание">
+												<div dangerouslySetInnerHTML={{ __html: this.isDescriptionAvailable(index) }} />
+													
 												</InfoRow>
 											</Div>
 											{
