@@ -162,7 +162,9 @@ class App extends React.Component {
 							this.state.games.length > 0 &&
 							this.state.games.map((game, index) => (
 								<div key={index}>
-									<h2>{game.name}</h2>
+									<h2
+										onClick={(e) => this.onChange(game.name)}
+									>{game.name}</h2>
 									<Group 
 										title="Информация об игре"
 										style={{
