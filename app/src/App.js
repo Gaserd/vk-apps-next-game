@@ -85,7 +85,7 @@ class App extends React.Component {
 				this.setState({ 
 					games_additional : []
 				}, function() {
-					fetch(`https://api.rawg.io/api/games/${game.slug}`)
+					fetch(`https://api.ag.ru/api/games/${game.slug}`)
 					.then(res => res.json())
 					.then(data => {
 						if (typeof data !== 'undefined') {
